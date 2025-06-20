@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8" />
+<title>فاتورة البيع</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    direction: rtl;
+  }
+  .receipt {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    border: 2px solid #333;
+    border-radius: 10px;
+  }
+  h2 {
+    text-align: center;
+  }
+  p {
+    font-size: 18px;
+  }
+</style>
+</head>
+<body>
+<div class="receipt">
+  <h2>فاتورة البيع</h2>
+  <p>التاريخ: {{ date }}</p>
+  <p>المنتج: {{ product_name }}</p>
+  <p>الكمية: {{ quantity }}</p>
+  <p>الإجمالي: {{ total_price }} ريال</p>
+  <p>طريقة الدفع: {{ payment }}</p>
+  <p>المصروف: {{ expense }} ريال</p>
+</div>
+</body>
+</html>

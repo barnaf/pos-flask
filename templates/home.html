@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8" />
+<title>نقطة مبيعات</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    direction: rtl;
+  }
+  .product-circle {
+    display: inline-block;
+    width: 100px;
+    height: 100px;
+    line-height: 100px;
+    border-radius: 50%;
+    text-align: center;
+    margin: 10px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    user-select: none;
+  }
+  .selected {
+    box-shadow: 0 0 10px 3px yellow;
+    transform: scale(1.1);
+  }
+</style>
+</head>
+<body>
+<h1>اختر المنتج للبيع</h1>
+
+<form action="/sell" method="post" id="sellForm">
+  <div id="products-container">
+    {% for product in products %}
+    <label>
+      <input type="radio" name="code" value="{{ product.code }}" style="display:none;" required />
+      <div class="product-circle" style="background-color: {{ ['#e74c3c', '#3498db', '#27ae60'][loop.index0 % 3] }};">
+        {{ product.name }}
+      </div>
+    </label>
+    {% endfor %}
+  </div>
+
+  <p>
+    الكمية: <input type="number" name="quantity" id="quantityInput" value="0" min="0" readonly />
+  </p>
+
+  <p>
+    طريقة الدفع:
+    <select name="payment" required>
+      <option value="نقدي">نقدي</option>
+      <option value="شبكة">شبكة</option>
+      <option value="نقدي + شبكة">نقدي + شبكة</option>
+    </select>
+  </p>
+
+  <p>
+    المصروف: <input type="number" name="expense" min="0" step="0.01" value="0" />
+  </p>
+
+  <button type="submit">بيع المنتج</button>
+</form>
+
+<script>
+  const productCircles = document.querySelectorAll('.product-circle');
+  const quantityInput = document.getElementById('quantityInput');
+  let selectedProductCode = null;
+  let clickCount = 0;
+
+  productCircles.forEach(circle => {
+    circle.addEventListener('click', () => {
+      if (selectedProductCode !== circle.previousElementSibling.value) {
+        selectedProductCode = circle.previousElementSibling.value;
+        quantityInput.value = 1;
+        clickCount = 1;
+        productCircles.forEach(c => c.classList.remove('selected'));
+        circle.classList.add('selected');
+      } else {
+        clickCount++;
+        quantityInput.value = clickCount;
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
